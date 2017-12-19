@@ -1,0 +1,12 @@
+Hola %usr_nombre% %usr_apellido%,
+
+Bienvenido al portal de adopciones de mascotas.  
+Tu contraseña es:
+
+%password%
+
+No olvides cambiarla luego de haber ingresado al sistema. 
+
+Login en: http://rabitos.site88.net/signin
+
+Gracias, Rabitos.

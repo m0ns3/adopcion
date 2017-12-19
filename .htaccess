@@ -1,0 +1,21 @@
+# INICIO
+<IfModule mod_rewrite.c>
+
+#Activación de Rewrite
+RewriteEngine On
+
+
+#averiguar si hay que darle permisos a las carpetas css, js, img etc
+RewriteCond $1 !^(index\.php|resources|robots\.txt) 
+
+
+#Verificamos si es un directorio o un archivo
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#En caso de no existir redireccionamos
+RewriteRule  ^(.*)$ /adopcion/index.php/$1 [L,QSA]
+
+</IfModule>
+ 
+# FIN
