@@ -41,7 +41,7 @@ class Signin extends CI_Controller {
             $this->load->library('encrypt');
 
             // Generate hash from a their password
-            $hash = $this->encrypt->sha1($password);
+            $hash = sha1($password);
 
             if ($row->usr_is_active != 0) { // See if the user is active or not
               // Compare the generated hash with that in the database

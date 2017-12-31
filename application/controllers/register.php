@@ -64,6 +64,7 @@ class Register extends CI_Controller {
               redirect('register', 'refresh');
           }
       } else {
+      
           redirect('register');
       
       }
