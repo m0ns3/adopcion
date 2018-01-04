@@ -37,7 +37,7 @@
             <li><p><strong><?php echo $row->usr_nombre . ' ' . $row->usr_apellido; ?></strong></p></li>
             <br /><br />
             <?php echo form_submit('submit', $this->lang->line('common_form_elements_action_delete'), 'class="btn btn-success"'); ?>
-            o <? echo anchor('users',$this->lang->line('common_form_elements_cancel'));?>
+            o <?php echo anchor('users',$this->lang->line('common_form_elements_cancel'));?>
             <?php echo form_hidden('id', $row->usr_id); ?>
         <?php endforeach; ?>
     <?php echo form_close() ; ?>

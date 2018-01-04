@@ -73,7 +73,7 @@
 
 		<p>* Campos Obligatorios</p>
 	    <div class="form-group">
-	      <button type="submit" class="btn btn-success"><?php echo $this->lang->line('common_form_elements_go');?></button> o <? echo anchor('users',$this->lang->line('common_form_elements_cancel'));?>
+	      <button type="submit" class="btn btn-success"><?php echo $this->lang->line('common_form_elements_go');?></button> o <?php echo anchor('users',$this->lang->line('common_form_elements_cancel'));?>
 	    </div>
 		<?php echo form_close() ; ?>
 	</div>

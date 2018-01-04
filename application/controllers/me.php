@@ -106,7 +106,7 @@ class Me extends CI_Controller {
       $this->load->view('users/change_password', $data);      
       $this->load->view('common/footer');
     } else {
-      $hash = $this->encrypt->sha1($this->input->post('usr_new_pwd_1')); 
+      $hash = sha1($this->input->post('usr_new_pwd_1')); 
 
       $data = array(
         'usr_hash' => $hash,

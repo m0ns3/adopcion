@@ -57,7 +57,7 @@ class Register extends CI_Controller {
         $file = str_replace('%usr_apellido%', $data['usr_apellido'], $file);
         $file = str_replace('%password%', $password, $file);
 
-          //PROBANDO EL ENVIO DE EMAIL
+          //ENVIO DE EMAIL
           if (mail ($data['usr_email'], $this->lang->line('email_subject_new_password'),$file, 'From: rabitos@domain.com') ) {
 
               $this->session->set_flashdata('correcto', 'Enviamos un mensaje a tu correo, por favor revísalo.');
