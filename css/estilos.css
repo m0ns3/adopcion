@@ -333,3 +333,9 @@ table .glyphicon-remove{
 table .glyphicon-pencil{
   color: black;
 }
+#sinpuntos{
+  list-style-type: none;
+}
+#img-chica{
+  width: 30%;
+}

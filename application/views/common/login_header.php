@@ -13,7 +13,7 @@
   <!-- inicia menú -->
   <div id="usernav" class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
-      <li><a href="#"><span class="glyphicon glyphicon-heart"></span> Mis mascotas publicadas</a></li>
+      <li><?php echo anchor('mascotas/', '<span class="glyphicon glyphicon-heart"></span> Mis mascotas publicadas'); ?></li>
       <li><?php echo anchor('me/editar_informacion', '<span class="glyphicon glyphicon-pencil"></span> Editar mi información'); ?></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
