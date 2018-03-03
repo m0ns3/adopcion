@@ -12,7 +12,7 @@
 				<article class="post clearfix">
 				
 					<a href="#" class="thumb pull-left">
-						<img id="" src="../img/dog.jpg" class="img-thumbnail" >
+						<img id="" src="<?php if (($row->foto) != NULL){echo base_url().$row->foto;}else{echo '../img/dog.jpg';}  ?>" class="img-thumbnail" >
 					</a>
 					
 					
@@ -24,7 +24,19 @@
 					
 					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Especie: </strong><?php echo $row->especie; ?></p></li><br />
 			
-					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Estado: </strong><?php echo $row->estados_idEstados; ?></p></li><br />
+					<li id="sinpuntos"><p id="estado_desc" class="post-contenido text-justify"><strong>Estado: </strong><?php foreach ($est->result() as $fila) {
+							if ($fila->idEstados == $row->estados_idEstados) {
+									$estado = $fila->descripcion; 
+							}
+					}
+					if (isset($estado)) {
+						echo $estado;
+					}else{
+						echo "No definido";
+					}
+
+
+					?></p></li><br />
 
 					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Edad: </strong><?php echo $row->edad; ?></p></li><br />
 
@@ -32,7 +44,11 @@
 
 					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Descripción: </strong><?php echo $row->descripcion; ?></p></li><br />
 
-					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Publicado: </strong><?php echo $row->publicado; ?></p></li><br />
+					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Publicado: </strong><?php if ($row->publicado == 1){
+						echo "Si";
+						}else{
+							echo "No";
+						} ?></p></li><br />
 
 					<a href="#" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Eliminar</a>
 					<a href="#" class="btn btn-sm btn-success pull-right">Ver más</a>

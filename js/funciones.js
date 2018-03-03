@@ -3,4 +3,5 @@ $(document).ready(function(){
     var url = window.location.href;
     $('.nav a[href="'+url+'"]').parent().addClass('active');
 
+
 });

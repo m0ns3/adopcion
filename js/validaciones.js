@@ -88,6 +88,18 @@ $(document).ready(function(){
 		}
 	});
 
+	$("#mascotaForm").validate({
+		rules: {
+			pet_nombre: {
+				required : true,
+				alfa: true,
+				maxlength: 125
+			}
+		},
+		submitHandler: function(form){
+			form.submit();
+		}
+	});
 
 	jQuery.validator.addMethod("alfa", function(value, element) {
   	return this.optional(element) || /^[a-zA-Záéíóúàèìòùäëïöüñ\s]+$/i.test(value);

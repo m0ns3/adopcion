@@ -8,6 +8,7 @@ class Mascotas extends CI_Controller {
     	$this->load->helper('text');
     	$this->load->model('Mascotas_model'); 
     	$this->load->library('form_validation');
+    	$this->form_validation->set_error_delimiters('<p class="alert alert-danger" role="alert"><strong>', '</strong></p>');
   	}
 	public function index(){
 		if ( ($this->session->userdata('logged_in')) == TRUE){
@@ -15,7 +16,8 @@ class Mascotas extends CI_Controller {
 			$data['usuario'] = $this->session->userdata('usr_email');
 	       	if ($this->Mascotas_model->mostrar_mascotas($user_id)) {
 	       		$data['query'] = $this->Mascotas_model->mostrar_mascotas($user_id);
-      			
+	       		$data['est'] = $this->Mascotas_model->mostrar_todos_estados();
+
 	       	}else{
 	       		$data['query'] = FALSE;
 	       	}
@@ -33,12 +35,32 @@ class Mascotas extends CI_Controller {
 	}
 
 	public function agregar_mascota(){
+ 
 
-		$data['page_heading'] = 'Agregar mascota';  
+		$data['pet_nombre'] = array('name' => 'pet_nombre', 'class' => 'form-control', 'id' => 'pet_nombre', 'value' => set_value('pet_nombre', ''), 'maxlength'   => '100', 'size' => '35');
+	    $data['pet_especies'] = array('perro' => 'perro',
+	      							 'gato'  => 'gato'
+	      							);
 	    // paso los valores de las tablas obtenidos en el modelo, a la vista
     	$data['estados_opciones'] = $this->Mascotas_model->mostrar_estados();
     	$data['razas_opciones'] = $this->Mascotas_model->mostrar_razas();
-
+    	$data['edades'] = array('cachorro' => 'Cachorro',
+	      				'joven'    => 'Joven',
+	      				'adulto'   => 'Adulto',
+	      				'anciano'  => 'Anciano'
+	      				);
+    	$data['tamanios'] = array('muychico' => 'Muy chico',
+	      				   'chico'    => 'Chico',
+	      				   'mediano'  => 'Mediano',
+	      				   'grande'   => 'Grande',
+	      				   'muygrande'=> 'Muy grande'
+	      				);
+      	$data['pet_color'] = array('name' => 'pet_color', 'class' => 'form-control', 'id' => 'pet_color', 'value' => set_value('pet_color', ''), 'maxlength'   => '100', 'size' => '35');
+      	$data['pet_esterilizado'] = array('name' => 'pet_este', 'id' => 'pet_este', 'value' => set_value('pet_este', ''));
+      	$data['pet_temperamento'] = array('name' => 'pet_temperamento', 'class' => 'form-control', 'id' => 'pet_temperamento', 'value' => set_value('pet_temperamento', ''), 'maxlength'   => '100', 'size' => '35');
+      	$data['pet_descripcion'] = array('name' => 'pet_descripcion', 'class' => 'form-control', 'id' => 'pet_descripcion', 'value' => set_value('pet_descripcion', ''));
+      	$data['pet_foto'] = array('name' => 'pet_foto', 'id' => 'pet_foto', 'value' => set_value('pet_foto', ''));
+	    
 		$this->form_validation->set_rules('pet_nombre', 'Nombre de la mascota', 'trim|required|min_length[1]|max_length[50]');
 	    $this->form_validation->set_rules('pet_especie', 'Especie', 'required');
 	    $this->form_validation->set_rules('pet_estado', 'Estado', 'required');
@@ -49,32 +71,85 @@ class Mascotas extends CI_Controller {
 	    //$this->form_validation->set_rules('pet_foto', 'Foto de la mascota', 'trim|required|min_length[1]|max_length[20]');
 	    
 	    if ($this->form_validation->run() == FALSE) {
+
+	    
+
+	    	$this->load->view('common/header');
+      		if ( ($this->session->userdata('logged_in') == TRUE) AND 
+       		($this->session->userdata('usr_access_level') == 1) ) {
+        		$this->load->view('common/admin_login_header');
+    		}else{
+    			$data['usuario'] =  $this->session->userdata('usr_email');
+    			$this->load->view('common/login_header', $data);
+    		}  
+      		$this->load->view('mascotas/agregar_mascota',$data);
+      		$this->load->view('common/footer');
 	    	
-	    	$this->load->view('mascotas/agregar_mascota',$data);
 	    }else{
-	    	//do_upload();
+	    	//do_upload(); los datos ingresados son validos
 		    $imagen = 'pet_foto';
-		    $config['upload_path'] = '/var/www/html/prueba/upload/';
+		    $config['upload_path'] = './pics/';
 		    $config['allowed_types'] = 'jpg|jpeg|png';
 		    $config['max_size'] = '2048';
-		    $config['max_width']  = '1024';
-		    $config['max_height']  = '768';
+		    $config['max_width']  = '3000';
+		    $config['max_height']  = '2000';
 		    $config['max_filename']  = '20';
-		    $config['remove_spaces']  = TRUE;  
-
+		    $config['remove_spaces']  = TRUE;
+		    $config['file_name'] = convert_accented_characters($_FILES['pet_foto']['name']);
+// var_dump($_FILES['pet_foto']['name']);
+// exit;
+		    
     		$this->load->library('upload', $config);
+    		
 
 	    	if (! $this->upload->do_upload($imagen)){
 	    	  $data = array('fail' => $this->upload->display_errors(),
 	                        'success' => false);
-		      $this->load->view('mascotas/agregar_mascota', $data);
+
+$data['pet_nombre'] = array('name' => 'pet_nombre', 'class' => 'form-control', 'id' => 'pet_nombre', 'value' => set_value('pet_nombre', ''), 'maxlength'   => '100', 'size' => '35');
+	    $data['pet_especies'] = array('perro' => 'perro',
+	      							 'gato'  => 'gato'
+	      							);
+	    // paso los valores de las tablas obtenidos en el modelo, a la vista
+    	$data['estados_opciones'] = $this->Mascotas_model->mostrar_estados();
+    	$data['razas_opciones'] = $this->Mascotas_model->mostrar_razas();
+    	$data['edades'] = array('cachorro' => 'Cachorro',
+	      				'joven'    => 'Joven',
+	      				'adulto'   => 'Adulto',
+	      				'anciano'  => 'Anciano'
+	      				);
+    	$data['tamanios'] = array('muychico' => 'Muy chico',
+	      				   'chico'    => 'Chico',
+	      				   'mediano'  => 'Mediano',
+	      				   'grande'   => 'Grande',
+	      				   'muygrande'=> 'Muy grande'
+	      				);
+      	$data['pet_color'] = array('name' => 'pet_color', 'class' => 'form-control', 'id' => 'pet_color', 'value' => set_value('pet_color', ''), 'maxlength'   => '100', 'size' => '35');
+      	$data['pet_esterilizado'] = array('name' => 'pet_este', 'id' => 'pet_este', 'value' => set_value('pet_este', ''));
+      	$data['pet_temperamento'] = array('name' => 'pet_temperamento', 'class' => 'form-control', 'id' => 'pet_temperamento', 'value' => set_value('pet_temperamento', ''), 'maxlength'   => '100', 'size' => '35');
+      	$data['pet_descripcion'] = array('name' => 'pet_descripcion', 'class' => 'form-control', 'id' => 'pet_descripcion', 'value' => set_value('pet_descripcion', ''));
+      	$data['pet_foto'] = array('name' => 'pet_foto', 'id' => 'pet_foto', 'value' => set_value('pet_foto', ''));
+
+
+
+		      $this->load->view('common/header');
+      		  if ( ($this->session->userdata('logged_in') == TRUE) AND 
+       			($this->session->userdata('usr_access_level') == 1) ) {
+        		$this->load->view('common/admin_login_header');
+    		  }else{
+    			$data['usuario'] =  $this->session->userdata('usr_email');
+    		  $this->load->view('common/login_header', $data);
+    		  }  
+      		  $this->load->view('mascotas/agregar_mascota',$data);
+      		  $this->load->view('common/footer');
+	    	
 		    }else{
 	    	  $image_data = $this->upload->data();
-		      $foto_nombre = $image_data['file_name'];
+		      $foto_nombre = convert_accented_characters(($image_data['file_name']));
 	    	
 
 	    	  $mascota = array( 
-			        'nombre' => $this->input->post('pet_nombre'), 
+			        'nombreMascota' => $this->input->post('pet_nombre'), 
 			        'especie' => $this->input->post('pet_especie'), 
 			        'Estados_idEstados' => intval($this->input->post('pet_estado')) + 1, //intval() me permite tomar el valor en int del string que se pasa como parámetro
 			        'Razas_idRazas' => intval($this->input->post('pet_raza')) + 1,  
@@ -84,19 +159,21 @@ class Mascotas extends CI_Controller {
 			        'color' => $this->input->post('pet_color'),
 			        'esterilizado' => $this->input->post('pet_esterilizado'),
 			        'temperamento' => $this->input->post('pet_temperamento'),
-			        'descripcionMascota' => $this->input->post('pet_descripcion'),
-			        'Usuarios_idUsuarios' => $this->input->post('usr_id'),
-			        'foto_nombre' => $foto_nombre
+			        'descripcion' => $this->input->post('pet_descripcion'),
+			        'usr_id' => $this->input->post('usr_id'),
+			        'foto' => 'pics/'.$foto_nombre
 		     		);
+	    	 
+ 
 	    		if ($this->Mascotas_model->agregar_mascota($mascota)) {
 
-		            //$this->session->set_flashdata('mensaje', 'Se agregó la mascota correctamente.');
-		            //redirect('mascotas/agregar_mascota', 'refresh');
-		            echo "mascota agregada";
+		            $this->session->set_flashdata('mensaje', 'Has agregado una mascota.');
+		            redirect('mascotas/agregar_mascota', 'refresh');
+		      
         		}else {
-		            //$this->session->set_flashdata('error', 'Hubo un error, inténtalo nuevamente.');
-		            //redirect('mascotas/agregar_mascota', 'refresh');
-		            echo "error";
+		            $this->session->set_flashdata('error', 'Hubo un error, inténtalo nuevamente.');
+		            redirect('mascotas/agregar_mascota', 'refresh');
+		         
         		}
 	    	}
 		}

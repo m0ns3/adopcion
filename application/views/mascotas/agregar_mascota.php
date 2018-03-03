@@ -1,21 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Prueba</title>
-
-	<!-- Bootstrap core CSS -->
-	<link href="<?php echo base_url('bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
-
-	<!-- Bootstrap theme -->
-	<link href="<?php echo base_url('bootstrap/css/bootstrap-theme.min.css'); ?>" rel="stylesheet">
-  
-</head>
-<body>
+<div class="container">
+	<?php 
+      $mensaje = $this->session->flashdata('mensaje');
+      if ($mensaje) {
+    ?>
+        <div class="regEnviado animated fadeInDown" id="regEnviado"> 
+          <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>¡Muy bien!</strong> <p><?php echo $mensaje ?></p>
+          </div> 
+        </div>
+    <?php
+      }
+      $error = $this->session->flashdata('error');
+      if ($error) {
+    ?>
+        <div class="regEnviado animated fadeInDown" id="regEnviado"> 
+          <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>¡Uy!</strong> <p><?php echo $error ?></p>
+          </div> 
+        </div>
+    <?php
+      }
+    ?>
 	<div class="form">
-		<h2><?php echo $page_heading; ?></h2>
+		<div class="page-header">
+  			<h2 class="text-center text-success" id="sombra"><?php echo 'Agregar mascota' ; ?></h2>
+		</div> 
 
 		<?php if (isset($success) && $success == true) : ?>
         <div class="alert alert-success">
@@ -25,120 +36,100 @@
 
       <?php if (isset($fail) && $fail == true) : ?>
         <div class="alert alert-danger">
-          <strong><?php echo 'Error'; ?> </strong> <?php echo 'La imagen no puede ser guardada en este momento'; ?>
+          <strong><?php echo 'Error'; ?> </strong> <?php echo 'Debe cargar una imagen válida'; ?>
           <?php echo $fail ; ?> 
         </div>
       <?php endif ; ?>
 
+	<div class="col-md-6">
 		<?php echo form_open_multipart('mascotas/agregar_mascota','role="form" id="mascotaForm" class="form"') ; ?>
-
 		<div class="form-group">
 	      <?php echo form_error('pet_nombre'); ?>
 	      <label for="pet_nombre">* Nombre de la mascota</label>
-	      <?php echo form_input('pet_nombre'); ?>
+	      <?php echo form_input($pet_nombre, (isset($pet_nombre) ? $pet_nombre : '')); ?>
 	    </div>
 
 	    <div class="form-group">
 	      <?php 
-	      $especies = array('perro' => 'perro',
-	      					'gato'  => 'gato'
-	      					);
 	      echo form_error('pet_especie'); ?>
 	      <label id="pet_especie" for="pet_especie">* Especie</label>
-	      <?php echo form_dropdown('pet_especie', $especies); ?>
+	      <?php echo form_dropdown('pet_especie', $pet_especies,(isset($pet_especie) ? $pet_especie : ''),'class= "btn btn-block dropdown-toggle"'); ?>
 	    </div>
 
 	    <div class="form-group">
 	      <?php echo form_error('pet_estado'); ?>
 	      <label id="pet_estado" for="pet_estado">* Estado</label>
-	      <?php echo form_dropdown('pet_estado', $estados_opciones); ?>
+	      <?php echo form_dropdown('pet_estado', $estados_opciones,(isset($pet_estado) ? $pet_estado : ''),'class= "btn btn-block dropdown-toggle"'); ?>
 	    </div>
 
 	    <div class="form-group">
 	      <?php echo form_error('pet_raza'); ?>
 	      <label id="pet_raza" for="pet_raza">* Raza</label>
-	      <?php echo form_dropdown('pet_raza', $razas_opciones); ?>
+	      <?php echo form_dropdown('pet_raza', $razas_opciones,(isset($pet_raza) ? $pet_raza : ''),'class= "btn btn-block dropdown-toggle"'); ?>
 	    </div>
 
 	    <div class="form-group">
-	      <?php echo form_error('pet_sexo'); ?>
-	      <label for="pet_sexo">* Sexo</label>
-			<input type="radio" name="pet_sexo" id="pet_sexo_macho"  value="macho" checked="" /> Macho
-			<input type="radio" name="pet_sexo" id="pet_sexo_hembra" value="hembra" /> Hembra		
+	      <?php echo form_error('pet_sexo');?>
+	      <label for="pet_sexo">* Sexo </label>
+			<input type="radio" name="pet_sexo" id="pet_sexo_macho"  value="macho" checked="" />  Macho 
+			<input type="radio" name="pet_sexo" id="pet_sexo_hembra" value="hembra" />  Hembra 		
 	    </div>
 		
 		<div class="form-group">
 	      <?php 
-	      $edades = array('cachorro' => 'Cachorro',
-	      				'joven'    => 'Joven',
-	      				'adulto'   => 'Adulto',
-	      				'anciano'  => 'Anciano'
-	      				);
 	      echo form_error('pet_edad'); ?>
 	      <label id="pet_edad" for="pet_edad">* Edad</label>
-	      <?php echo form_dropdown('pet_edad', $edades); ?>
+	      <?php echo form_dropdown('pet_edad', $edades, (isset($pet_edad) ? $pet_edad : ''),'class= "btn btn-block dropdown-toggle"'); ?>
 	    </div>
 
 	    <div class="form-group">
 	      <?php 
-	      $tamanios = array('muychico' => 'Muy chico',
-	      				   'chico'    => 'Chico',
-	      				   'mediano'  => 'Mediano',
-	      				   'grande'   => 'Grande',
-	      				   'muygrande'=> 'Muy grande'
-	      				);
 	      echo form_error('pet_tamanios'); ?>
 	      <label id="pet_tamanios" for="pet_tamanios">Tamaño</label>
-	      <?php echo form_dropdown('pet_tamanios', $tamanios); ?>
+	      <?php echo form_dropdown('pet_tamanios', $tamanios, (isset($pet_tamanios) ? $pet_tamanios : ''),'class= "btn btn-block dropdown-toggle"'); ?>
 	    </div>
+	    <br \>
+	    <div><a href="<?php echo base_url('mascotas/'); ?>" class=""><span class="glyphicon glyphicon-arrow-left"></span> Volver</a></div>
+	</div>
 
+	<div class="col-md-6">
 	    <div class="form-group">
 	      <?php echo form_error('pet_color'); ?>
 	      <label for="pet_color">Color de pelo</label>
-	      <?php echo form_input('pet_color'); ?>
+	      <?php echo form_input($pet_color, (isset($pet_color) ? $pet_color : '')); ?>
 	    </div>
 
 		<div class="form-group">
 	      <?php echo form_error('pet_esterilizado'); ?>
 	      <label for="pet_esterilizado">Esterilizado/a</label>
-	      <?php echo form_checkbox('pet_esterilizado', 'S'); ?>
+	      <?php echo form_checkbox($pet_esterilizado); ?>
 	    </div>	
 
 	    <div class="form-group">
 	      <?php echo form_error('pet_temperamento'); ?>
 	      <label for="pet_temperamento">Temperamento</label>
-	      <?php echo form_input('pet_temperamento'); ?>
+	      <?php echo form_input($pet_temperamento, (isset($pet_temperamento) ? $pet_temperamento : '')); ?>
 	    </div>
 
 	    <div class="form-group">
 	      <?php echo form_error('pet_descripcion'); ?>
 	      <label for="pet_descripcion">Descripción</label>
-	      <div><?php echo form_textarea('pet_descripcion'); ?></div>
+	      <div><?php echo form_textarea($pet_descripcion,(isset($pet_descripcion) ? $pet_descripcion : '')); ?></div>
 	    </div>
 
-	    <?php echo form_hidden('usr_id','1'); ?>
+	    <?php echo form_hidden('usr_id',$this->session->userdata('usr_id')); ?>
 
 	    <div class="form-group">
 	    	<label for="pet_foto">Foto</label>
-	    	<?php echo form_upload('pet_foto'); ?>
+	    	<?php echo form_upload($pet_foto); ?>
 	    </div>
         
 		<div>
 			<?php echo form_submit('submit', 'Agregar mascota', 'class="btn btn-lg btn-success btn-block"'); ?>
 		</div>
-		<?php echo form_close() ; ?>
+		<?php echo form_close() ;?>
   		<br>
   		<p>* Campos obligatorios</p>
 	</div>
-
-	<footer>
-			<!-- Bootstrap core JavaScript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages
-		load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="<?php echo base_url('bootstrap/js/bootstrap.min.js');?>"></script>
-	</footer>
-</body>
-
-</html>
+	</div>
+</div>

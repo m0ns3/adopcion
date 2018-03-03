@@ -13,6 +13,17 @@ class Mascotas_model extends CI_Model {
        }
     return $est; 
   }
+  public function mostrar_todos_estados() {
+    $q = $this->db->get('estados');
+
+
+    if ($q->num_rows() > 0) {
+      return $q;
+    } else {
+      return false;
+    }
+   
+  }
   public function mostrar_razas() {
   	$query = $this->db->query("SELECT descripcion FROM Razas");
       foreach ($query->result() as $row){
@@ -38,4 +49,6 @@ class Mascotas_model extends CI_Model {
       return false;
     }
   }
+
+
 }
