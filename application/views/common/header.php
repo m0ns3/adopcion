@@ -48,7 +48,7 @@
           <ul class="nav navbar-nav">
             <li><a href="./">Inicio</a></li>
             <li><a href="#">Adoptar mascota</a></li>
-            <li><a href="#">Buscar mascota</a></li>
+            <li><a href="<?php echo base_url('mascotas/buscar_mascota');?>">Buscar mascota</a></li>
             <li><a href="#">Donar</a></li>
             <li><a href="#">Contacto</a></li>
             <li class="dropdown">

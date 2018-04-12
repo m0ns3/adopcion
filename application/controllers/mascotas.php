@@ -56,7 +56,7 @@ class Mascotas extends CI_Controller {
 	      				   'muygrande'=> 'Muy grande'
 	      				);
       	$data['pet_color'] = array('name' => 'pet_color', 'class' => 'form-control', 'id' => 'pet_color', 'value' => set_value('pet_color', ''), 'maxlength'   => '100', 'size' => '35');
-      	$data['pet_esterilizado'] = array('name' => 'pet_este', 'id' => 'pet_este', 'value' => set_value('pet_este', ''));
+      	$data['pet_esterilizado'] = array('name' => 'pet_esterilizado', 'id' => 'pet_esterilizado', 'value' => set_value('pet_esterilizado', ''));
       	$data['pet_temperamento'] = array('name' => 'pet_temperamento', 'class' => 'form-control', 'id' => 'pet_temperamento', 'value' => set_value('pet_temperamento', ''), 'maxlength'   => '100', 'size' => '35');
       	$data['pet_descripcion'] = array('name' => 'pet_descripcion', 'class' => 'form-control', 'id' => 'pet_descripcion', 'value' => set_value('pet_descripcion', ''));
       	$data['pet_foto'] = array('name' => 'pet_foto', 'id' => 'pet_foto', 'value' => set_value('pet_foto', ''));
@@ -125,7 +125,7 @@ $data['pet_nombre'] = array('name' => 'pet_nombre', 'class' => 'form-control', '
 	      				   'muygrande'=> 'Muy grande'
 	      				);
       	$data['pet_color'] = array('name' => 'pet_color', 'class' => 'form-control', 'id' => 'pet_color', 'value' => set_value('pet_color', ''), 'maxlength'   => '100', 'size' => '35');
-      	$data['pet_esterilizado'] = array('name' => 'pet_este', 'id' => 'pet_este', 'value' => set_value('pet_este', ''));
+      	//$data['pet_esterilizado'] = array('name' => 'pet_esterilizado', 'id' => 'pet_esterilizado', 'value' => set_value('pet_esterilizado', ''));
       	$data['pet_temperamento'] = array('name' => 'pet_temperamento', 'class' => 'form-control', 'id' => 'pet_temperamento', 'value' => set_value('pet_temperamento', ''), 'maxlength'   => '100', 'size' => '35');
       	$data['pet_descripcion'] = array('name' => 'pet_descripcion', 'class' => 'form-control', 'id' => 'pet_descripcion', 'value' => set_value('pet_descripcion', ''));
       	$data['pet_foto'] = array('name' => 'pet_foto', 'id' => 'pet_foto', 'value' => set_value('pet_foto', ''));
@@ -204,4 +204,89 @@ $data['pet_nombre'] = array('name' => 'pet_nombre', 'class' => 'form-control', '
     // 	}
 
     // }
+
+    public function buscar_mascota(){
+
+    	$this->form_validation->set_rules('pet_nom', 'Nombre de la mascota', 'trim|min_length[1]|max_length[50]');
+	    $this->form_validation->set_rules('pet_color', 'Color de pelo', 'trim|min_length[1]|max_length[255]');
+
+	    if ($this->form_validation->run() == FALSE) {
+
+	    	$data['pet_especies'] = array('perro' => 'perro',
+	      							 'gato'  => 'gato'
+	      							);
+	    	$data['estados_opciones'] = $this->Mascotas_model->mostrar_estados();
+	    	$data['razas_opciones'] = $this->Mascotas_model->mostrar_razas();
+	    	$data['edades'] = array('cachorro' => 'Cachorro',
+		      				'joven'    => 'Joven',
+		      				'adulto'   => 'Adulto',
+		      				'anciano'  => 'Anciano'
+		      				);
+	    	$data['tamanios'] = array('muychico' => 'Muy chico',
+		      				   'chico'    => 'Chico',
+		      				   'mediano'  => 'Mediano',
+		      				   'grande'   => 'Grande',
+		      				   'muygrande'=> 'Muy grande'
+		      				);
+
+	    $this->load->view('common/header');
+	  		if ( ($this->session->userdata('logged_in') == TRUE) AND 
+	   		($this->session->userdata('usr_access_level') == 1) ) {
+	    $this->load->view('common/admin_login_header');
+			}
+			if( ($this->session->userdata('logged_in') == TRUE) AND 
+	   		($this->session->userdata('usr_access_level') != 1) ){
+				$data['usuario'] =  $this->session->userdata('usr_email');
+		$this->load->view('common/login_header', $data);
+			}  
+  		$this->load->view('mascotas/buscar_mascota',$data);
+  		$this->load->view('common/footer');
+	    }else{
+	    	$mascota = array( 
+			        'nombreMascota' => $this->input->post('pet_nom'), 
+			        'especie' => $this->input->post('pet_especie'), 
+			        'Estados_idEstados' => $this->input->post('pet_estado'), 
+			        'Razas_idRazas' => $this->input->post('pet_raza'),  
+			        'genero' => $this->input->post('pet_sexo'),
+			        'edad' => $this->input->post('pet_edad'),
+			        'tamanio' => $this->input->post('pet_tamanios'),
+			        'color' => $this->input->post('pet_color'),
+			        'esterilizado' => $this->input->post('pet_esterilizado'),
+			        'temperamento' => $this->input->post('pet_temperamento'),
+		     		);
+	    	
+	    	
+	    	if (($data['encontrados'] = $this->Mascotas_model->buscar_mascotas($mascota))) {
+	    		$data['est'] = $this->Mascotas_model->mostrar_todos_estados();
+	    		$this->load->view('common/header');
+		  		if ( ($this->session->userdata('logged_in') == TRUE) AND 
+		   		($this->session->userdata('usr_access_level') == 1) ) {
+		    		$this->load->view('common/admin_login_header');
+				}
+				if( ($this->session->userdata('logged_in') == TRUE) AND 
+		   		($this->session->userdata('usr_access_level') != 1) ){
+					$data['usuario'] =  $this->session->userdata('usr_email');
+					$this->load->view('common/login_header', $data);
+				}  
+	  		$this->load->view('mascotas/resultados_pet',$data);
+	  		$this->load->view('common/footer');
+			
+	    	}else{
+	    		$data['not_found'] = TRUE;
+	    		$this->load->view('common/header');
+		  		if ( ($this->session->userdata('logged_in') == TRUE) AND 
+		   		($this->session->userdata('usr_access_level') == 1) ) {
+		    		$this->load->view('common/admin_login_header');
+				}
+				if( ($this->session->userdata('logged_in') == TRUE) AND 
+		   		($this->session->userdata('usr_access_level') != 1) ){
+					$data['usuario'] =  $this->session->userdata('usr_email');
+					$this->load->view('common/login_header', $data);
+				}  
+	  		$this->load->view('mascotas/resultados_pet',$data);
+	  		$this->load->view('common/footer');
+
+	    	}
+	    }	    
+    }
 }

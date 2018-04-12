@@ -50,5 +50,59 @@ class Mascotas_model extends CI_Model {
     }
   }
 
+  public function buscar_mascotas($pet) {
+    $i = 0;
+    foreach ($pet as $key => $value) { //cuento los filtros de busqueda y guardo en un array
+      if ($value != '') {
+        ++$i;
+        $filtros[$key] = $value;
+      }
+    }
+
+
+    // armo las query en base a la cant de filtros de busqueda
+    if ($i == 1) { 
+
+      foreach ($filtros as $key => $value) {
+         $query = 'SELECT * FROM mascotas WHERE '. $key . ' LIKE ' . "'".$value."'";
+      }
+      
+    }elseif ($i > 1) {
+
+      $key1 = key($filtros); // obtiene la clave de un array en la posicion actual
+
+      $value1 = array_shift($filtros); //Quita un elemento del principio del array
+
+      $query1 = 'SELECT * FROM mascotas WHERE '. $key1 . ' LIKE ' . "'".$value1."'";
+      $query2 = '';
+      foreach ($filtros as $k => $v) {
+        $query2 = $query2.' AND ' . $k . ' LIKE ' . "'".$v."'";
+      }
+
+      $query= $query1.$query2;
+     
+    }
+
+// echo $i;
+// echo "<br>";
+// echo $query;
+// exit;
+if ($i > 0) {
+  $res = $this->db->query($query);
+
+
+  if ($res->num_rows() > 0 ) {
+    return $res;
+  
+  }
+}else{
+  echo "no hay filtros";
+ 
+}
+
+   
+
+    
+  } // cierra funcion
 
 }

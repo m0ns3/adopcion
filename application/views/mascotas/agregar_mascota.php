@@ -99,11 +99,17 @@
 	      <?php echo form_input($pet_color, (isset($pet_color) ? $pet_color : '')); ?>
 	    </div>
 
-		<div class="form-group">
-	      <?php echo form_error('pet_esterilizado'); ?>
-	      <label for="pet_esterilizado">Esterilizado/a</label>
-	      <?php echo form_checkbox($pet_esterilizado); ?>
-	    </div>	
+		<!-- <div class="form-group"> -->
+	      <?php //echo form_error('pet_esterilizado'); ?>
+	      <!-- <label for="pet_esterilizado">Esterilizado/a</label> -->
+	      <?php //echo form_checkbox($pet_esterilizado); ?>
+	    <!-- </div> -->
+
+	    <div class="form-group">
+	        <?php echo form_error('pet_esterilizado'); ?>
+	        <label id="pet_esterilizado" for="pet_esterilizado">Esterilizado/a</label>
+	        <input type="checkbox" name="pet_esterilizado" id="pet_esterilizado" value="s">
+      	</div>	
 
 	    <div class="form-group">
 	      <?php echo form_error('pet_temperamento'); ?>
