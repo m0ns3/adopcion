@@ -51,12 +51,15 @@
 						} ?></p></li><br />
 
 					<a href="#" class="btn btn-sm btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Eliminar</a>
-					<a href="#" class="btn btn-sm btn-success pull-right">Ver más</a>
+					
+					
+					<a href="<?php echo base_url('mascotas/ver_mas/').$row->idMascota; ?>" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="ver_mas">Ver más</a>
 				</ul>
 			  				
     			</article>
 	        
-		    <?php endforeach ; ?>
+		    <?php  
+		     endforeach ; ?>
 			
 <?php } ?>
 </section>

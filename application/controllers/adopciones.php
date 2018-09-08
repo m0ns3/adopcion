@@ -8,5 +8,6 @@ class Adopciones extends MY_Controller {
 
   public function index(){
     echo "controlador adopciones";
+    echo "en rama nueva";
   }
 }

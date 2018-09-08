@@ -7,18 +7,7 @@
     <?php echo form_open($submit_path, 'class="form-signin" id="registrarseForm" role="form"') ; ?>
       <h2 class="form-signin-heading"><?php echo $this->lang->line('forgot_pwd_header') ; ?></h2>
       <p class="lead"><?php echo $this->lang->line('forgot_pwd_instruction') ;?></p>
-      <!-- ver como queda asi y despues borrar la tabla para que quede con los form-group -->
-      <!-- <table border="0">
-          <tr>
-              <td><?php //echo $this->lang->line('signin_new_pwd_email') ; ?></td>
-          </tr>
-          <tr>    
-              <td><?php //echo form_input($usr_new_pwd_1); ?></td>
-          </tr>
-          <tr>    
-              <td><?php //echo form_input($usr_new_pwd_2); ?></td>
-          </tr>
-      </table> -->
+   
 
       <div class="form-group">
         <label for="usr_new_pwd_1">Ingrese su nueva contraseña</label>

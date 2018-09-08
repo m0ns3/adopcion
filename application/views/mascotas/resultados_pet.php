@@ -48,7 +48,7 @@
 					<li id="sinpuntos"><p class="post-contenido text-justify"><strong>Color: </strong><?php echo $row->color; ?></p></li><br />
 
 					
-					<a href="#" class="btn btn-sm btn-success pull-right">Ver más</a>
+					<a href="<?php echo base_url('mascotas/ver_mas/').$row->idMascota; ?>" class="btn btn-sm btn-success pull-right">Ver más</a>
 				</ul>
 			  				
     			</article>

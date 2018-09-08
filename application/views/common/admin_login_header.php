@@ -9,7 +9,7 @@
     </button>
     <?php echo anchor('users', '<span class="glyphicon glyphicon-th"></span> Administración','class="navbar-brand"') ; ?>  
   </div>
-  <!-- inicia menú -->
+ 
   <div id="usernav" class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
       <?php if ($this->session->userdata('usr_access_level') == 1) : ?>

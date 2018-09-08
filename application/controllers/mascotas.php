@@ -6,7 +6,8 @@ class Mascotas extends CI_Controller {
     	parent::__construct();
     	$this->load->helper('form');
     	$this->load->helper('text');
-    	$this->load->model('Mascotas_model'); 
+    	$this->load->model('Mascotas_model');
+    	$this->load->model('Users_model'); 
     	$this->load->library('form_validation');
     	$this->form_validation->set_error_delimiters('<p class="alert alert-danger" role="alert"><strong>', '</strong></p>');
   	}
@@ -204,6 +205,57 @@ $data['pet_nombre'] = array('name' => 'pet_nombre', 'class' => 'form-control', '
     // 	}
 
     // }
+
+    public function ver_mas(){
+    	$id = $this->uri->segment(3);
+    	$mascota = $this->Mascotas_model->mostrar_mascota($id);
+    	$data['mensaje'] = 'No se puede mostrar información de la mascota';
+   
+    	foreach ($mascota->result() as $row) {
+	        $data['idMascota'] = $row->idMascota;
+	        $estados_idEstados = $row->estados_idEstados;
+	        $data['especie'] = $row->especie;
+	        $razas_idRazas = $row->razas_idRazas;
+	        $data['nombreMascota'] = $row->nombreMascota;
+	        $data['genero'] = $row->genero;
+	        $data['edad'] = $row->edad;
+	        $data['tamanio'] = $row->tamanio;
+	        $data['color'] = $row->color;
+	        $esterilizado = $row->esterilizado;
+	        $data['temperamento'] = $row->temperamento;
+	        $data['descripcion'] = $row->descripcion;
+	        //$publicado = $row->publicado;
+	        $data['fecha'] = $row->fecha;
+	        $usr_id = $row->usr_id;
+	        $data['foto'] = $row->foto;
+      }
+      	$est = $this->Mascotas_model->mostrar_todos_estados();
+      	foreach ($est->result() as $fila) {
+			if ($fila->idEstados == $estados_idEstados) {
+					$data['estado'] = $fila->descripcion; 
+			}
+		}
+      	$raz = $this->Mascotas_model->mostrar_todas_razas();
+      	foreach ($raz->result() as $filas) {
+			if ($filas->idRazas == $razas_idRazas) {
+					$data['raza'] = $filas->descripcion; 
+			}
+		}
+
+		if ($esterilizado == 's') {
+			$data['esterilizado'] = 'Si';
+		}else{
+			$data['esterilizado'] = 'Sin dato'; 
+		}
+		$usu = $this->Users_model->get_user_details($usr_id);
+		foreach ($usu->result() as $f) {
+			if ($f->usr_id == $usr_id) {
+					$data['usr_email'] = $f->usr_email; 
+			}
+		}
+    	$this->load->view('mascotas/ver_mas_pets',$data);
+
+    }
 
     public function buscar_mascota(){
 

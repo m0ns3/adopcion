@@ -107,14 +107,7 @@
 		    			<a href="#" class="list-group-item">item2</a>
 		    			<a href="#" class="list-group-item">item3</a>
 		    	</div>
-		    	<!-- <h4>Articulos recientes</h4>
-		    		<a href="#" class="list-group-item"></a>
-		    		<h4 class="list-group-item-heading">Adopciones</h4>
-		    		<p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis harum maxime id nemo corporis, esse, cupiditate enim, possimus ipsum quod, sapiente debitis temporibus non. Quos reprehenderit numquam error veniam beatae?</p>
-
-		    		<a href="#" class="list-group-item"></a>
-		    		<h4 class="list-group-item-heading">Adopciones</h4>
-		    		<p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis harum maxime id nemo corporis, esse, cupiditate enim, possimus ipsum quod, sapiente debitis temporibus non. Quos reprehenderit numquam error veniam beatae?</p> -->
+		    	
     		</aside>
     	</div>
     	

@@ -12,7 +12,7 @@ $(document).ready(function(){
 				.closest('.form-group')
 				.removeClass('has-error');
 		},
-//este código siguiente es para los casos en que el texto de la validación aparece primero en los checkbox
+
 		errorPlacement: function(error, element){
 			if (element.prop('type') === 'checkbox') {
 				error.insertAfter(element.parent());
@@ -117,19 +117,11 @@ $(document).ready(function(){
   	return this.optional(element) || /^[\d\s\,_\-()\/]+$/i.test(value);
 	}, 'Ingresa un número válido.');
 
-	// //Habilito el botón Registrarme cuando pasa la validación del formulario
-	// $("#registrarme").prop('disabled', 'disabled');
-	// $("#registrarseForm").on('keyup blur', function(){
-	// 	if ($("#registrarseForm").valid()) {
-	// 		$("#registrarme").prop('disabled', false);
-	// 	}else{
-	// 		$("#registrarme").prop('disabled', 'disabled');
-	// 	}
-	// });
+	
 
 	jQuery.validator.addMethod("otroContacto", function(value, element) {
   	return this.optional(element) || /^[^\|\¬\!\¡\¿\?\"\'\%\$\*\^\<\>\~\=\&\+\{\}]+$/.test( value );
 	}, 'Red social u otro contacto.');
-	//ingresar todos los caracteres menos caracteres especiales digamos
+	
 
 });

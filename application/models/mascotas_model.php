@@ -24,6 +24,17 @@ class Mascotas_model extends CI_Model {
     }
    
   }
+  public function mostrar_todas_razas() {
+    $q = $this->db->get('razas');
+
+
+    if ($q->num_rows() > 0) {
+      return $q;
+    } else {
+      return false;
+    }
+   
+  }
   public function mostrar_razas() {
   	$query = $this->db->query("SELECT descripcion FROM Razas");
       foreach ($query->result() as $row){
@@ -39,8 +50,18 @@ class Mascotas_model extends CI_Model {
       return false;
     }
   }
-  public function mostrar_mascotas($user) {
+  public function mostrar_mascotas($user) { //mostrar mascotas por usuario
     $this->db->where('usr_id', $user);
+    $r = $this->db->get('mascotas');
+    
+    if ($r->num_rows() > 0) {
+      return $r;
+    } else {
+      return false;
+    }
+  }
+  public function mostrar_mascota($id) { //mostrar mascota por id de mascota
+    $this->db->where('idMascota', $id);
     $r = $this->db->get('mascotas');
 
     if ($r->num_rows() > 0) {

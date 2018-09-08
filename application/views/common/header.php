@@ -28,7 +28,7 @@
 <!-- END header.php -->
 
 <body>
-<!-- <div class="container theme-showcase" role="main"> -->
+
 	<header>
 	<div class="container" id="header">
     <!-- Fixed navbar -->
