@@ -5,7 +5,6 @@
 RewriteEngine On
 
 
-#averiguar si hay que darle permisos a las carpetas css, js, img etc
 RewriteCond $1 !^(index\.php|resources|robots\.txt) 
 
 
